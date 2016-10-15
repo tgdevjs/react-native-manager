@@ -25,17 +25,16 @@ export const loginUser = ({ email, password }) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(user => loginUserSuccess(dispatch, user))
       .catch( () => {
-        firebase.auth().createUserWithEmailAndPassword(email, password).
+        firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(user => loginUserSuccess(dispatch, user))
-        .catch(user => loginUserFail(dispatch, user));
+        .catch( () => loginUserFail(dispatch));
       });
   }
 }
 
-const loginUserFail = (dispatch, user) => {
+const loginUserFail = (dispatch) => {
   dispatch({
-    type: LOGIN_USER_FAIL,
-    payload: user
+    type: LOGIN_USER_FAIL
   });
 }
 
