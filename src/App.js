@@ -4,10 +4,9 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import firebase from 'firebase';
 
-
-
 import reducers from './reducers';
 import { config } from '../config/firebaseConfig';
+import LoginForm from './components/LoginForm';
 
 
 class App extends Component {
@@ -17,23 +16,12 @@ class App extends Component {
   render() {
     return (
       <Provider store={createStore(reducers)}>
-        <View style={styles.container}>
-          <Text>
-            App
-          </Text>
+        <View>
+          <LoginForm />
         </View>
       </Provider>
     );
   }
 }
-
-const styles = {
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-}
-
 
 export default App;
