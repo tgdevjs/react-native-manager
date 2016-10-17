@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Card, CardSection, Button } from './common';
 import EmployeeForm from './EmployeeForm';
-import { employeeUpdate } from '../actions';
+import { employeeUpdate, employeeSave } from '../actions';
 
 class EmployeeList extends Component {
   componentWillMount() {
@@ -12,8 +12,8 @@ class EmployeeList extends Component {
     })
   }
   onButtonPress() {
-    const { name, phone, shift } = this.props;
-    console.log('EmployeeEdit: onButtonPress: ',name,phone,shift);
+    const { name, phone, shift, employee } = this.props;
+    this.props.employeeSave({ name, phone, shift, uid: employee.uid })
   }
   render() {
     return (
@@ -32,4 +32,4 @@ const mapStateToProps = state => {
   return { name, phone, shift };
 };
 
-export default connect( mapStateToProps, { employeeUpdate } )(EmployeeList);
+export default connect( mapStateToProps, { employeeUpdate, employeeSave } )(EmployeeList);
