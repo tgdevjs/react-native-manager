@@ -47,6 +47,7 @@ export const employeeSave = ({ name, phone, shift, uid }) => {
     firebase.database().ref(`/users/${ currentUser.uid }/employees/${ uid }`)
     .set({ name, phone, shift })
     .then(() => {
+      dispatch({ type: EMPLOYEE_SAVE_SUCCESS });
       Actions.employeeList({ type: 'reset' });
     });
   }
