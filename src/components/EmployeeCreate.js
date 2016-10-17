@@ -34,7 +34,7 @@ class EmployeeCreate extends Component {
           <Text style={styles.pickerTextStyle}>Shift</Text>
           <Picker style={{flex: 1}}
             selectedValue={this.props.shift}
-            onValueChanged={value => this.props.employeeUpdate({ prop: 'shift', value })}
+            onValueChange={value => this.props.employeeUpdate({ prop: 'shift', value })}
           >
             <Picker.Item label="Monday" value="" />
             <Picker.Item label="Tuesday" value="Tuesday" />
