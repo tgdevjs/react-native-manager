@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { View, Text, ListView } from 'react-native';
+import { ListView } from 'react-native';
 import { connect } from 'react-redux';
 import { employeesFetch } from '../actions';
 import _ from 'lodash';
+import ListItem from './ListItem';
 
 class EmployeeComponent extends Component {
   componentWillMount() {
-    console.log('EmployeeComponent componetWillMount')
     this.props.employeesFetch();
     this.createDataSource(this.props);
   }
   componentWillReceiveProps(nextProps) {
-    console.log('EmployeeComponent componentWillReceiveProps')
     this.createDataSource(nextProps);
   }
   createDataSource({ employees }) {
@@ -20,23 +19,24 @@ class EmployeeComponent extends Component {
     });
     this.dataSource = ds.cloneWithRows(employees);
   }
+
+  renderRow(employee) {
+      return <ListItem employee={employee} />
+  }
+
   render() {
-    console.log('EmployeeComponent: ',this.props.employees);
     return (
-      <View>
-        <Text>Employee List</Text>
-        <Text>Employee List</Text>
-        <Text>Employee List</Text>
-        <Text>Employee List</Text>
-        <Text>Employee List</Text>
-        <Text>Employee List</Text>
-        <Text>Employee List</Text>
-      </View>
+      <ListView
+        enableEmptySections
+        dataSource={this.dataSource}
+        renderRow={this.renderRow}
+      />
     );
   }
 }
 
 const mapStateToProps = state => {
+
   const employees = _.map(state.employees, (val, uid) => {
     return { ...val, uid };
   });
