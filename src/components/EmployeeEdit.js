@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Communications from 'react-native-communications';
 import _ from 'lodash';
-import { Card, CardSection, Button } from './common';
+import { Card, CardSection, Button, Confirm } from './common';
 import EmployeeForm from './EmployeeForm';
 import { employeeUpdate, employeeSave } from '../actions';
 
 class EmployeeList extends Component {
+  state = { showModal: false };
+
   componentWillMount() {
     _.each(this.props.employee, (value, prop) => {
       this.props.employeeUpdate({ prop, value });
@@ -15,6 +18,12 @@ class EmployeeList extends Component {
     const { name, phone, shift, employee } = this.props;
     this.props.employeeSave({ name, phone, shift, uid: employee.uid })
   }
+
+  onTextPress() {
+    const { phone, shift } = this.props;
+    Communications.text( phone, `Your next shift is on ${ shift }.`);
+  }
+
   render() {
     return (
       <Card>
@@ -22,6 +31,28 @@ class EmployeeList extends Component {
         <CardSection>
           <Button onPress={this.onButtonPress.bind(this)}>Save Changes</Button>
         </CardSection>
+
+        <CardSection>
+          <Button onPress={this.onTextPress.bind(this)}>
+            Text Schedule
+          </Button>
+        </CardSection>
+
+        <CardSection>
+          <Button
+            onPress={() => this.setState({
+              showModal: !this.state.showModal
+            })}
+          >
+            FireEmployee
+          </Button>
+        </CardSection>
+
+        <Confirm
+            visible={ this.state.showModal }
+        >
+          Are you sure you want to delete this?
+        </Confirm>
       </Card>
     )
   }
